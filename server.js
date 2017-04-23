@@ -4,12 +4,9 @@ const config = yaml.safeLoad(fs.readFileSync('./config/server.yaml'));
 
 const io = require('socket.io')(config.serverPort); // wywołujemy z argumentem portu
 const ChatServer = require('./lib/ChatServer');
-const DummyAuthenticator = require('./lib/DummyAuthenticator');
+const LevelAuthenticator = require('./lib/LevelAuthenticator');
 
-const authenticator = new DummyAuthenticator({
-    user1: 'pass1',
-    user2: 'pass2'
-});
+const authenticator = new LevelAuthenticator({path: __dirname + '/users.db'});
 const server = new ChatServer({ io, authenticator });
 server.init();
 

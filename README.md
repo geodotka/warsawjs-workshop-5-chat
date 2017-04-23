@@ -16,11 +16,18 @@
     result: boolean
 }
 
+## register (response)
+{
+    result: boolean
+}
+
+
 # Format poleceń
 /login user password
 
 
 # API
 Authenticator {
-    validate(login, password) : Promise<boolean>;
+    validate(login, password) : Promise.<boolean>;
+    register(login, password) : Promise.<undefined>;
 }

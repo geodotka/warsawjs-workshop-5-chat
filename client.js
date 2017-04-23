@@ -28,6 +28,10 @@ function sendLogin() {
     connection.emit('login', credentials);
 }
 
+function sendRegister() {
+    connection.emit('register', credentials);
+}
+
 connection.on('connect', function() {
     writeLine('* Connected to chat server!');
     connected = true;
@@ -46,6 +50,7 @@ connection.on('message', function({ from, body }){    // { body } jest wypakowan
 });
 
 connection.on('login', function({ result }){
+    console.log(result);
     if (result === true) {
         rl.setPrompt(`${credentials.login}> `);
         writeLine('* Successfully logged in!');
@@ -54,15 +59,30 @@ connection.on('login', function({ result }){
     }
 });
 
+connection.on('register', function({ result }) {
+    if (result === true) {
+        writeLine('* Successfully registered!');
+        sendLogin()
+    } else {
+        writeLine('! Failed to register.')
+    }
+});
+
 rl.setPrompt('> ');
 rl.prompt();
 
 
 const commandHandlers = {
-    login: function handleLogin(login, password) {
+    login: function handlerLogin(login, password) {
         credentials = { login, password };
         if (connected) {
             sendLogin();
+        }
+    },
+    register: function handlerRegister(login, password) {
+        credentials = { login, password };
+        if (connected) {
+            sendRegister();
         }
     }
 };
