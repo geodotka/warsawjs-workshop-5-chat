@@ -20,8 +20,21 @@ function writeLine(line, ...args) {
 
 // ### Message handler ###
 
+const credentials = {
+    login: 'user-' + parseInt(Math.random() * 100),
+    password: ''
+};
+
+
+function login() {
+    connection.emit('login', credentials);
+}
+
 connection.on('connect', function() {
-    writeLine('* Connected to chat server!')
+    writeLine('* Connected to chat server!');
+    if (credentials) {
+        login();
+    }
 });
 
 connection.on('message', function({ from, body }){    // { body } jest wypakowanie obiektu zgodnie z ES6
@@ -30,15 +43,10 @@ connection.on('message', function({ from, body }){    // { body } jest wypakowan
 
 connection.on('login', function({ result }){
     if (result === true) {
-        writeLine('* Succesfully logged in!')
+        writeLine('* Successfully logged in!')
     } else {
         writeLine('! Failed to log in.')
     }
-});
-
-connection.emit('login', {
-    login: 'user-' + parseInt(Math.random() * 100),
-    password: ''
 });
 
 rl.setPrompt('> ');
