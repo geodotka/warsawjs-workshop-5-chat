@@ -18,6 +18,7 @@
   "homepage": "https://github.com/geodotka/warsawjs-workshop-5-chat#readme",
   "dependencies": {
     "bcrypt": "^1.0.2",
+    "colors": "^1.1.2",
     "js-yaml": "^3.8.3",
     "level": "^1.6.0",
     "socket.io": "^1.7.3",

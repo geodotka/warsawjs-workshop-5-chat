@@ -7,6 +7,7 @@ const rl = readline.createInterface({
 });
 const util = require('util');
 const EOL = require('os').EOL;
+const colors = require('colors');
 
 
 // ### Utility functions ###
@@ -41,7 +42,7 @@ connection.on('connect', function() {
 });
 
 connection.on('disconnect', function() {
-    writeLine('* Disconnected to chat server!');
+    writeLine('* Disconnected to chat server!'.yellow);
     connected = false;
 });
 
@@ -53,18 +54,18 @@ connection.on('login', function({ result }){
     console.log(result);
     if (result === true) {
         rl.setPrompt(`${credentials.login}> `);
-        writeLine('* Successfully logged in!');
+        writeLine('* Successfully logged in!'.green);
     } else {
-        writeLine('! Failed to log in.')
+        writeLine('! Failed to log in.'.red)
     }
 });
 
 connection.on('register', function({ result }) {
     if (result === true) {
-        writeLine('* Successfully registered!');
+        writeLine('* Successfully registered!'.green);
         sendLogin()
     } else {
-        writeLine('! Failed to register.')
+        writeLine('! Failed to register.'.red)
     }
 });
 
