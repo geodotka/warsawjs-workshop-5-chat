@@ -20,6 +20,10 @@ function writeLine(line, ...args) {
 
 // ### Message handler ###
 
+connection.on('connect', function() {
+    writeLine('* Connected to chat server!')
+});
+
 connection.on('message', function({ from, body }){    // { body } jest wypakowanie obiektu zgodnie z ES6
     writeLine('* %s: %s', from, body);
 });
@@ -28,7 +32,7 @@ connection.on('login', function({ result }){
     if (result === true) {
         writeLine('* Succesfully logged in!')
     } else {
-        writeLine('* Failed to log in!')
+        writeLine('! Failed to log in.')
     }
 });
 
