@@ -16,5 +16,11 @@
     result: boolean
 }
 
-## Format poleceń
+# Format poleceń
 /login user password
+
+
+# API
+Authenticator {
+    validate(login, password) : Promise<boolean>;
+}

@@ -4,8 +4,13 @@ const config = yaml.safeLoad(fs.readFileSync('./config/server.yaml'));
 
 const io = require('socket.io')(config.serverPort); // wywołujemy z argumentem portu
 const ChatServer = require('./lib/ChatServer');
+const DummyAuthenticator = require('./lib/DummyAuthenticator');
 
-const server = new ChatServer({ io });
+const authenticator = new DummyAuthenticator({
+    user1: 'pass1',
+    user2: 'pass2'
+});
+const server = new ChatServer({ io, authenticator });
 server.init();
 
 // console.log(__dirname); // pokazuje aktualną ściżkę. require resolvuje ścieżki od aktualnego kataogu
