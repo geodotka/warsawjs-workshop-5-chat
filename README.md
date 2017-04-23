@@ -21,6 +21,16 @@
     result: boolean
 }
 
+## join
+{
+    login: 'string'
+}
+
+## leave
+{
+    login: 'string'
+}
+
 
 # Format poleceń
 /login user password

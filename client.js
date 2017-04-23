@@ -51,7 +51,6 @@ connection.on('message', function({ from, body }){    // { body } jest wypakowan
 });
 
 connection.on('login', function({ result }){
-    console.log(result);
     if (result === true) {
         rl.setPrompt(`${credentials.login}> `);
         writeLine('* Successfully logged in!'.green);
@@ -67,6 +66,14 @@ connection.on('register', function({ result }) {
     } else {
         writeLine('! Failed to register.'.red)
     }
+});
+
+connection.on('join', function({ login }) {
+    writeLine('* %s logged in!'.blue, login);
+});
+
+connection.on('leave', function({ login }) {
+    writeLine('* %s logged out!'.cyan, login);
 });
 
 rl.setPrompt('> ');
