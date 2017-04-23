@@ -1,7 +1,7 @@
 const io = require('socket.io')(3000); // wywołujemy z argumentem portu
+const ChatServer = require('./lib/ChatServer');
 
-io.on('connection', function (socket) {
-    socket.on('message', function({ body }){
-        io.sockets.emit('message', { body });   // jak przyjdzie wiadomość, wyśle do wszystkich klientów
-    });
-});
+// console.log(__dirname); // pokazuje aktualną ściżkę. require resolvuje ścieżki od aktualnego kataogu
+
+const server = new ChatServer({ io });
+server.init();
