@@ -21,6 +21,7 @@ function writeLine(line, ...args) {
 // ### Message handler ###
 
 let credentials = null;
+let connected = false;
 
 
 function sendLogin() {
@@ -29,9 +30,15 @@ function sendLogin() {
 
 connection.on('connect', function() {
     writeLine('* Connected to chat server!');
+    connected = true;
     if (credentials) {
         sendLogin();
     }
+});
+
+connection.on('disconnect', function() {
+    writeLine('* Disconnected to chat server!');
+    connected = false;
 });
 
 connection.on('message', function({ from, body }){    // { body } jest wypakowanie obiektu zgodnie z ES6
@@ -53,7 +60,9 @@ rl.prompt();
 const commandHandlers = {
     login: function handleLogin(login, password) {
         credentials = { login, password };
-        sendLogin();
+        if (connected) {
+            sendLogin();
+        }
     }
 };
 
