@@ -47,7 +47,8 @@ connection.on('message', function({ from, body }){    // { body } jest wypakowan
 
 connection.on('login', function({ result }){
     if (result === true) {
-        writeLine('* Successfully logged in!')
+        rl.setPrompt(`${credentials.login}> `);
+        writeLine('* Successfully logged in!');
     } else {
         writeLine('! Failed to log in.')
     }
