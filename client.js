@@ -20,20 +20,17 @@ function writeLine(line, ...args) {
 
 // ### Message handler ###
 
-const credentials = {
-    login: 'user-' + parseInt(Math.random() * 100),
-    password: ''
-};
+let credentials = null;
 
 
-function login() {
+function sendLogin() {
     connection.emit('login', credentials);
 }
 
 connection.on('connect', function() {
     writeLine('* Connected to chat server!');
     if (credentials) {
-        login();
+        sendLogin();
     }
 });
 
@@ -52,7 +49,24 @@ connection.on('login', function({ result }){
 rl.setPrompt('> ');
 rl.prompt();
 
+
+const commandHandlers = {
+    login: function handleLogin(login, password) {
+        credentials = { login, password };
+        sendLogin();
+    }
+};
+
 rl.on('line', function(line){
-    connection.emit('message', { body: line});
+    if (line[0] === '/') {
+        const commandParts = line.slice(1).split(' ').filter((part) => part.length > 0);
+        const commandName = commandParts[0];
+        const commandArgs = commandParts.slice(1);
+        if (commandHandlers[commandName]) {
+            commandHandlers[commandName].apply(undefined, commandArgs);
+        }
+    } else {
+        connection.emit('message', { body: line});
+    }
     rl.prompt();
 });

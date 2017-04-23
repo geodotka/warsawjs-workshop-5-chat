@@ -5,8 +5,16 @@
     from: 'string'
 }
 
-## login
+## login (request)
 {
     body: 'string',
     password: 'string'
 }
+
+## login (response)
+{
+    result: boolean
+}
+
+## Format poleceń
+/login user password
