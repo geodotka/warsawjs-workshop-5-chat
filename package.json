@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/geodotka/warsawjs-workshop-5-chat#readme",
   "dependencies": {
+    "js-yaml": "^3.8.3",
     "socket.io": "^1.7.3",
     "socket.io-client": "^1.7.3"
   }
