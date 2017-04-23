@@ -9,6 +9,8 @@ const util = require('util');
 const EOL = require('os').EOL;
 
 
+// ### Utility functions ###
+
 function writeLine(line, ...args) {
    process.stdout.clearLine();
    process.stdout.cursorTo(0);
@@ -16,8 +18,23 @@ function writeLine(line, ...args) {
    rl.prompt(true);
 }
 
-connection.on('message', function({ body }){    // { body } jest wypakowanie obiektu zgodnie z ES6
-    writeLine('* Server says: %s', body);
+// ### Message handler ###
+
+connection.on('message', function({ from, body }){    // { body } jest wypakowanie obiektu zgodnie z ES6
+    writeLine('* %s: %s', from, body);
+});
+
+connection.on('login', function({ result }){
+    if (result === true) {
+        writeLine('* Succesfully logged in!')
+    } else {
+        writeLine('* Failed to log in!')
+    }
+});
+
+connection.emit('login', {
+    login: 'user-' + parseInt(Math.random() * 100),
+    password: ''
 });
 
 rl.setPrompt('> ');
